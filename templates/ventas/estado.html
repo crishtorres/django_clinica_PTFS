@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block titulo %}Modificar Estado Pedido{% endblock titulo %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <h2>Edición estado pedido</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <form method="POST">
+                {% csrf_token %}
+                <!--{{ form }}-->
+                <div class="form-group">
+                    <label for="id_estado">Estado:</label>
+                    <select name="estado" class="form-control" required id="id_estado">
+                        {% for est in estados %}
+                        <option value="{{ est.cod }}">{{ est.desc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input class="form-control btn btn-success" type="submit" value="Grabar">
+                    </div>
+
+                    <div class="col-md-6">
+                        <a class="btn btn-danger form-control" href="{% url 'listado_pedidos' %}">Cancelar</a>
+                    </div>
+                </div>
+                
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

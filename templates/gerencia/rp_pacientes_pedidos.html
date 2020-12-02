@@ -1,0 +1,27 @@
+
+{% block body %}
+<h3>{{ titulo }}</h3>
+<table class="table">
+    <thead>
+        <tr>            
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Pedidos</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+{% for p in lista %}
+    <tr>
+    
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.apellido }}</td>
+        <td>{{ p.cantidad }}</td>
+        <td>{{ p.total }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

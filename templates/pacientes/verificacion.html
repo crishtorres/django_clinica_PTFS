@@ -1,0 +1,6 @@
+<form method="POST">
+    {% csrf_token %}
+    <h2>Desea eliminar el turno {{ object }}?</h2>
+    <button type="submit" name="button">Confirmar</button>
+    <a href="{% url 'listado_turnos' %}">Cancelar</a>
+</form>

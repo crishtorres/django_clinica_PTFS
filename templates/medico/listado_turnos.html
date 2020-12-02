@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block titulo %}Listado de Turnos{% endblock titulo %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="col-md-2">
+                    <input class="form-control" type="date" name="fecha">                    
+                </div>
+
+                <div class="col-md-2">
+                    <input type="submit" class="form-control btn btn-info" value="Buscar">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Listado Turnos</h1>
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Paciente</th>
+                            <th>Medico</th>
+                            <th>Fecha</th>
+                            <th>Asistencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        {% for turno in object_list %}
+                            <tr>
+                                <td>{{ turno.id }}</td>
+                                <td>{{ turno.paciente }}</td>
+                                <td>{{ turno.medico }}</td>
+                                <td>{{ turno.fecha }}</td>
+                                <td>{{ turno.asistencia }}</td>
+                                <td>
+                                    <a class="btn btn-info" href="{% url 'ver_historial' turno.idpaciente %}">Modificar historial</a> 
+                                </td>                            
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+        {% if mensaje %}
+            <p class="text-info text-center">{{ mensaje }}</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block titulo %}Login{% endblock titulo %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-xs-12">
+                <h2 class="text-center">Iniciar sesión</h2>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input class="form-control" type="text" name="username" placeholder="Usuario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input class="form-control" type="password" name="password" placeholder="Contraseña">
+                    </div>
+
+                    <input class="form-control btn btn-success" type="submit" value="Ingresar">
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-xs-12">
+                {% if mensaje %}
+                    <div class="text-danger text-center">{{ mensaje }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

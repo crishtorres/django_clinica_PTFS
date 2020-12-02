@@ -1,0 +1,192 @@
+{% extends "layout.html" %}
+{% block titulo %}Alta de pedido{% endblock titulo %}
+{% block body %}
+
+<style>
+    #id_cercania, #id_lado, #id_armazon{
+        display: none;
+    }
+    label[for="id_cercania"], label[for="id_lado"], label[for="id_armazon"]{
+        display:none;
+    }
+
+    .clsprod, .clscant, .clsunit, .clstot, .clssubtotal, .clsclasi, .clslado, .clscerca, .clsarma{
+        border: none;
+        max-width: 100px !important;
+    }
+
+    .tr_clone{
+        border-bottom:2px solid #289AD3;
+    }
+
+    #data_productos{
+        width: 100%;
+    }
+</style>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{% url 'listado_pedidos' %}" class="form-control btn btn-danger">Cancelar</a><br><br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <select name="producto" class="form-control" id="id_producto">
+                    <option value="" selected>-</option>
+                {% for prod in productos %}
+                    <option value="{{ prod.id }}">{{ prod.descripcion }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="">Cantidad</label>
+                <input type="number" value="" id="id_cantidad" name="cantidad" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">Precio</label>
+                <input type="number" value="" id="id_unitario" name="unitario" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="">Clasificación</label>
+                <input type="text" value="" disabled="disabled" id="id_clasificacion" name="clasificacion" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="id_lado">Lado</label>
+                <select id="id_lado" name="lado" class="form-control">
+                    <option value="-">-</option>
+                    <option value="I">Izquierdo</option>
+                    <option value="D">Derecho</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_armazon">Armazon</label>
+                <select id="id_armazon" name="armazon" class="form-control">
+                    <option value="-">-</option>
+                    <option value="S">SI</option>
+                    <option value="N">NO</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_cercania">Cercania</label>
+                <select id="id_cercania" name="cercania" class="form-control">
+                    <option value="-">-</option>
+                    <option value="L">Lejos</option>
+                    <option value="C">Cerca</option>
+                </select>                
+            </div>
+            
+            <input class="btn btn-info form-control" type="button" value="Agregar producto" id="add_more"> <br><br>
+        </div>
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table"> 
+                        <table class='no_error'> 
+                            {{ pedido_form.as_p }} 
+                        </table> 
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-condensed" id="data_productos">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Clasificación</th>
+                                    <th>Lado</th>
+                                    <th>Cercania</th>
+                                    <th>Armazon</th>
+                                    <th>Cantidad</th>                    
+                                    <th>Precio</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr id="tr_to_clone" class="tr_clone">
+                                    <td><input class="clsprod" type="text" name="productos"></td>
+                                    <td><input class="clsclasi" type="text" name="clasificaciones"></td>
+                                    <td><input class="clslado" type="text" name="lados"></td>
+                                    <td><input class="clscerca" type="text" name="cercanias"></td>
+                                    <td><input class="clsarma" type="text" name="armazones"></td>
+                                    <td><input class="clscant" type="text" name="cantidades"></td>
+                                    <td><input class="clsunit" type="text" name="unitarios"></td>
+                                    <td><input class="clstot" type="text" name="totales"></td> 
+                                </tr>
+
+                                <tr>
+                                    <td><b>****</b></td>
+                                    <td><b>****</b></td>
+                                    <td><b>****</b></td>
+                                    <td><b>****</b></td>
+                                    <td><b>****</b></td>
+                                    <td><b>****</b></td>
+                                    <td><b>SUBTOTAL</b></td>
+                                    <td><b><input type="text" id="subtotal" value="0" class="clssubtotal"></b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <input class="form-control btn btn-success" type="submit" value="Grabar Pedido"><br ><br >
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        
+    </div>
+    
+</form>
+
+{% endblock %}
+<!--
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <form method="POST">
+            {% csrf_token %}
+
+            
+            
+            <div class="col-md-6" id="form_set">
+                {{ pedido_form.as_p }}
+            </div>
+
+            <div class="col-md-12">
+                {{ pedidoDet_form.as_table }}
+            </div>
+            
+            <input type="button" value="Add More" id="add_more"> 
+            <div id="empty_form" style="display:none"> 
+                <table class='no_error'> {{ pedidoDet_form.empty_form.as_table }} 
+                </table> 
+            </div>
+
+            <script>
+                $('#add_more').click(function() { 
+                    var form_idx = $('#id_form-TOTAL_FORMS').val(); 
+                    $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx)); 
+                    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1); 
+                }); 
+            </script>
+
+            <input class="form-control btn btn-success" type="submit" value="Grabar">
+        </form>
+    </div>
+</div>-->

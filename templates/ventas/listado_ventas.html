@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block titulo %}Listado de pedidos{% endblock titulo %}
+{% block body %}
+    
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <a href="{% url 'alta_pedido' %}" class="btn btn-success">Agregar pedido</a>
+        <h1>Listado Pedidos</h1>
+        <div class="table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Paciente</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>        
+                    {% for pedido in object_list %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>{{ pedido.estado }}</td>
+                            <td>{{ pedido.fecha }}</td>
+                            <td>{{ pedido.paciente }}</td>
+                            <td>{{ pedido.total }}</td> 
+                            <td>
+                                <a class="btn btn-info" href="{% url 'modificar_estado' pedido.id %}">Cambiar estado</a>
+                                <a class="btn btn-info detalle_pedido" href="#" id="{{ pedido.id }}">Ver detalle</a>
+                            </td>                         
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+    {% if mensaje %}
+        <p class="text-info text-center">{{ mensaje }}</p>
+    {% endif %}
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="modal_pedido">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Detalle Pedido</h4>
+      </div>
+      <div class="modal-body" id="body_detallePedido">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% endblock %}

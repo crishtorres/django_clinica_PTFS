@@ -1,0 +1,40 @@
+
+    
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>                    
+                        <th>Lado</th>
+                        <th>Cercania</th>
+                        <th>Armazon</th>
+                        {% if rol == 'Ventas' %}
+                        <th>Unitario</th>
+                        <th>Total</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>        
+                    {% for p in productos %}
+                        <tr>
+                            <td>{{ p.producto }}</td>
+                            <td>{{ p.cantidad }}</td>
+                            <td>{{ p.lado }}</td>
+                            <td>{{ p.cercania }}</td>
+                            <td>{{ p.armazon }}</td>   
+                            {% if rol == 'Ventas' %}
+                            <td>{{ p.unitario }}</td>
+                            <td>{{ p.total }}</td>
+                            {% endif %}                    
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</div>
+

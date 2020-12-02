@@ -1,0 +1,28 @@
+
+{% block body %}
+<h3>{{ titulo }}</h3>
+<table class="table">
+    <thead>
+        <tr>            
+            <th>Codigo</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Cant. Pedidos</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+{% for p in lista %}
+    <tr>
+        <td>{{ p.producto_id }}</td>
+        <td>{{ p.descripcion }}</td>
+        <td>{{ p.vendidos }}</td>
+        <td>{{ p.cantidad }}</td>
+        <td>{{ p.total }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

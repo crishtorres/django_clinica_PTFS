@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block titulo %}Modificar Historial Medico{% endblock titulo %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <h2>Edición historial medico</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input class="form-control btn btn-success" type="submit" value="Grabar">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

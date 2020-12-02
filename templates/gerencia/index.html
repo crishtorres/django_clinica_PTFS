@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block titulo %}Administración{% endblock titulo %}
+{% block body %}
+
+<h1>Gerencia</h1>
+
+<h3>Reportes</h3>
+<div class="row">
+    <div class="col-md-12">
+        <a target="_blank" href="{% url 'listado_pedidos' %}" class="btn btn-info">Listado de pedidos</a>
+        <a target="_blank" href="{% url 'listado_turnos' %}" class="btn btn-info">Listado de Turnos</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <form method="POST">
+            <div class="form-group">
+                <label for="fhd">Desde</label>
+                <input class="form-control" type="date" name="fhd" id="fhd">
+            </div>
+
+            <div class="form-group">
+                <label for="fhh">Hasta</label>
+                <input class="form-control" type="date" name="fhh" id="fhh">
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="f_apac" value="option1" checked>
+                    Asistencias por pacientes
+                </label>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="f_ipac" value="option2" checked>
+                    Inasistencias por pacientes
+                </label>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="f_ppac" value="option3" checked>
+                    Pedidos por pacientes
+                </label>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="f_pvend" value="option4" checked>
+                    Productos más vendidos
+                </label>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="f_vvend" value="option5" checked>
+                    Ventas por vendedor
+                </label>
+            </div>
+
+            <a href="#" id="f_solicitar" class="btn btn-success">Solicitar</a>
+
+        </form>
+    </div>
+
+    <div class="col-md-8 text-center" id="f_resultados">
+        <p>Seleccione una opción de la izquierda</p>
+    </div>
+</div>
+
+{% endblock %}
+
