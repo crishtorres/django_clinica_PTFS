@@ -1,4 +1,4 @@
-# django_clinica_PTFS
+# Curso de Desarrollo Full Stack con Python y JavaScript del PoloTIC
 Sistema de géstion para una clínica de Optometría
 Sistema desarrollado con Django y bootstrap para Curso de Desarrollo Full Stack con Python y JavaScript del PoloTIC de Misiones.
 
@@ -10,4 +10,3 @@ Los grupos son:
 - Secretaria
 - Taller
 - Gerencia
-
