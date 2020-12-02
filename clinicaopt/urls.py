@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from apps.principal.views import inicio, login_f, logout_f, indexGerencia, getReporte
 from apps.pacientes.views import listarTurno, altaTurno, editarTurno, eliminarTurno
-from apps.pacientes.class_view import TurnoList, TurnoCreate, TurnoEdit, TurnoDelete, HisMedicoEdit
-from apps.ventas.views import PedidosList, altaPedido, getDatosProducto, StatusPedidoEdit, finalizarPedido, getDetallePedido
+from apps.pacientes.class_view import TurnoList, TurnoCreate, TurnoEdit, TurnoDelete, HisMedicoEdit, PacientesCreate, PacientesList, PacientesEdit, PacientesDelete
+from apps.ventas.views import PedidosList, altaPedido, getDatosProducto, StatusPedidoEdit, finalizarPedido, getDetallePedido, ProductosCreate, ProductosDelete, ProductosEdit, ProductosList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,5 +38,13 @@ urlpatterns = [
     path('finalizar_pedido/<int:id>', finalizarPedido, name = 'finalizar_pedido'),
     path('get_detalle_pedido/<int:id>', getDetallePedido, name = 'get_detalle_pedido'),
     path('gerencia', indexGerencia, name = 'gerencia'),
-    path('get_reporte/<str:tipo>/<str:fd>/<str:fh>', getReporte, name = 'get_reporte')
+    path('get_reporte/<str:tipo>/<str:fd>/<str:fh>', getReporte, name = 'get_reporte'),
+    path('listado_pacientes', PacientesList.as_view(), name = 'listado_pacientes'),
+    path('alta_paciente', PacientesCreate.as_view(), name = 'alta_paciente'),
+    path('editar_paciente/<int:pk>', PacientesEdit.as_view(), name = 'editar_paciente'),
+    path('eliminar_paciente/<int:pk>', PacientesDelete.as_view(), name = 'eliminar_paciente'),
+    path('listado_productos', ProductosList.as_view(), name = 'listado_productos'),
+    path('alta_producto', ProductosCreate.as_view(), name = 'alta_producto'),
+    path('editar_producto/<int:pk>', ProductosEdit.as_view(), name = 'editar_producto'),
+    path('eliminar_producto/<int:pk>', ProductosDelete.as_view(), name = 'eliminar_producto')
 ]

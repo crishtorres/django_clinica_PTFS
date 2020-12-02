@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from .models import PedidosCab, PedidosDet, Productos
 from apps.pacientes.models import Pacientes
-from .forms import PedidosForm, PedidosDetForm, StatusForm
+from .forms import PedidosForm, PedidosDetForm, StatusForm, ProductosForm
 
 class PedidosList(ListView):
     model = PedidosCab
@@ -106,10 +106,6 @@ def altaPedido(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("login")
 
-    grupo = request.user.groups.get()
-    if grupo.name != 'Ventas' or grupo.name != 'Gerencia':
-         return HttpResponseRedirect(reverse("index"))
-
     productos = Productos.objects.all()
     
     if request.method == 'POST':
@@ -197,3 +193,40 @@ def finalizarPedido(request, id):
     pedido.estado = 'F'
     pedido.save()
     return redirect('listado_pedidos')
+
+class ProductosList(ListView):
+    model = Productos
+    template_name = 'productos/listado_productos.html'
+
+class ProductosCreate(CreateView):
+
+    model = Productos
+    form_class = ProductosForm
+    template_name = 'productos/alta_producto.html'
+    success_url = reverse_lazy('listado_productos')
+
+class ProductosEdit(UpdateView):
+    model = Productos
+    form_class = ProductosForm
+    template_name = 'productos/alta_producto.html'
+    success_url = reverse_lazy('listado_productos')
+
+class ProductosDelete(DeleteView):
+    model = Productos
+    template_name = 'productos/verificacion.html'
+    success_url = reverse_lazy('listado_productos')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        
+        resp = super(ProductosDelete, self).dispatch(*args, **kwargs)
+        grupo = self.request.user.groups.get()
+
+        if not self.request.user.is_authenticated or (grupo.name != 'Secretaria' and grupo.name != 'Gerencia'):
+            return HttpResponseRedirect(reverse("login"))
+        elif self.request.is_ajax():
+            response_data = {"result": "ok"}
+            return HttpResponse(simplejson.dumps(response_data),
+                content_type="application/json")
+        else:
+            return resp

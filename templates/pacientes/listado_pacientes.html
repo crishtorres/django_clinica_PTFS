@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block titulo %}Listado de Pacientes{% endblock titulo %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'alta_paciente' %}" class="btn btn-info">Agregar paciente</a>
+            <a href="{% url 'listado_turnos' %}" class="btn btn-info">Regresar a turnos</a>
+            <h1>Listado Pacientes</h1>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        {% for p in object_list %}
+                            <tr>
+                                <td>{{ p.id }}</td>
+                                <td>{{ p.nombre }}</td>
+                                <td>{{ p.apellido }}</td>
+                                <td>
+                                    <a class="btn btn-info" href="{% url 'editar_paciente' p.id %}">Editar</span></a> 
+                                    <a class="del_paciente btn btn-danger" href="{% url 'eliminar_paciente' p.id %}">Eliminar</a>
+                                </td>                            
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+
+</div>
+{% endblock %}
+

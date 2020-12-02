@@ -63,6 +63,42 @@ $(document).ready(function() {
         return false;
     }
 
+    var eliminar_paciente = function(e){
+        e.preventDefault();
+        if(!confirm("¿Desea eliminar el paciente?")){
+            return;
+        }
+        $.post(this.href, function(data) {
+            if (data.result == "ok"){
+                alert("Paciente eliminado correctamente!");
+                window.location=base+"listado_pacientes";
+            } else {
+                alert("Ocurrio un error");
+            }
+        }).fail(function() {
+            alert("error");
+        });
+        return false;
+    }
+
+    var eliminar_producto = function(e){
+        e.preventDefault();
+        if(!confirm("¿Desea eliminar el producto?")){
+            return;
+        }
+        $.post(this.href, function(data) {
+            if (data.result == "ok"){
+                alert("Producto eliminado correctamente!");
+                window.location=base+"listado_productos";
+            } else {
+                alert("Ocurrio un error");
+            }
+        }).fail(function() {
+            alert("error");
+        });
+        return false;
+    }
+
     var obtener_datos_producto = (e) => {
         e.preventDefault();
         var precio = document.getElementById('id_unitario');
@@ -95,8 +131,9 @@ $(document).ready(function() {
         });
     }
 
-
+    $(".del_producto").click(eliminar_producto);
     $(".del_turno").click(eliminar_turno);
+    $(".del_paciente").click(eliminar_paciente);
     $("#id_producto").change(obtener_datos_producto);
     $(".detalle_pedido").click(getDetallePedido);
 });

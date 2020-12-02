@@ -31,7 +31,6 @@ class PedidosDetForm(forms.ModelForm):
         }
 
 class StatusForm(forms.ModelForm):
-    
 
     class Meta:
         OPT_ESTADOS = (
@@ -43,3 +42,14 @@ class StatusForm(forms.ModelForm):
         model = PedidosCab
         fields = ('estado', 'id')
         widgets = {'estado': forms.Select(attrs = {'class' : 'form-control'}, choices = OPT_ESTADOS)}
+
+class ProductosForm(forms.ModelForm):
+    class Meta:
+        model = Productos
+        fields = '__all__'
+        widgets = {
+            'codigo': forms.TextInput(attrs={'class':'form-control'}),
+            'descripcion': forms.TextInput(attrs={'class': 'form-control'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'clasificacion': forms.Select(attrs={'class': 'form-control'}),
+        }

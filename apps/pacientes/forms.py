@@ -29,3 +29,13 @@ class HistorialForm(forms.ModelForm):
         model = Pacientes
         fields = ('historial', 'id')
         widgets = {'historial': forms.Textarea}
+
+
+class PacientesForm(forms.ModelForm):
+    class Meta:
+        model = Pacientes
+        fields = ('id','nombre','apellido')
+        widgets = {
+            'nombre': forms.TextInput(attrs = {'class':'form-control'}),
+            'apellido': forms.TextInput(attrs = {'class':'form-control'})
+        }

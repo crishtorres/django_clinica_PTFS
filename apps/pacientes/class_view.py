@@ -7,7 +7,7 @@ import json as simplejson
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import User
 from .models import Turnos, Pacientes
-from .forms import TurnoForm, HistorialForm
+from .forms import TurnoForm, HistorialForm, PacientesForm
 
 
 class TurnoList(ListView):
@@ -116,3 +116,43 @@ class HisMedicoEdit(UpdateView):
     form_class = HistorialForm
     template_name = 'medico/historial.html'
     success_url = reverse_lazy('listado_turnos')
+
+
+class PacientesList(ListView):
+    model = Pacientes
+    template_name = 'pacientes/listado_pacientes.html'
+
+class PacientesCreate(CreateView):
+
+    model = Pacientes
+    form_class = PacientesForm
+    template_name = 'pacientes/alta_paciente.html'
+    success_url = reverse_lazy('listado_pacientes')
+
+class PacientesEdit(UpdateView):
+    model = Pacientes
+    form_class = PacientesForm
+    template_name = 'pacientes/alta_paciente.html'
+    success_url = reverse_lazy('listado_pacientes')
+
+class PacientesDelete(DeleteView):
+    model = Pacientes
+    template_name = 'pacientes/verificacion.html'
+    success_url = reverse_lazy('listado_pacientes')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        
+        resp = super(PacientesDelete, self).dispatch(*args, **kwargs)
+        grupo = self.request.user.groups.get()
+
+        if not self.request.user.is_authenticated or (grupo.name != 'Secretaria' and grupo.name != 'Gerencia'):
+            return HttpResponseRedirect(reverse("login"))
+        elif self.request.is_ajax():
+            response_data = {"result": "ok"}
+            return HttpResponse(simplejson.dumps(response_data),
+                content_type="application/json")
+        else:
+            return resp
+
+
